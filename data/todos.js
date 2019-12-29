@@ -1,20 +1,20 @@
-import axios from "axios";
-import Vue from "vue";
+// import Vue from 'vue';
 
 var app = new Vue({
   el: '#app',
   data: {
-    message: "Hello",
+    message: 'Hello',
     todos: []
   },
   methods: {
-    doneTodo: function (id, e) {
+    doneTodo: function(id, e) {
       const params = new URLSearchParams();
       console.log(id, e);
-      params.append("id", id);
-      params.append("mode", "update");
-      axios.post('_ajax.php', params)
-        .then((res) => {
+      params.append('id', id);
+      params.append('mode', 'update');
+      axios
+        .post('_ajax.php', params)
+        .then(res => {
           console.log(res);
           if (res.state == 1) {
             e.target.addClass('done');
@@ -22,10 +22,9 @@ var app = new Vue({
             e.target.removeClass('done');
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
-        })
-
+        });
     },
     stateChange() {
       this.todos.forEach(value => {
@@ -35,24 +34,21 @@ var app = new Vue({
         if (value.state == 0) {
           value.state = false;
         }
-
-      })
+      });
     }
   },
   async mounted() {
     const params = new URLSearchParams();
-    params.append("id", 0);
-    params.append("mode", "mounted");
-// console.log(axios)
-  await axios.post('/_ajax.php', params).then((res) => {
+    params.append('id', 0);
+    params.append('mode', 'mounted');
+    // console.log(axios)
+    await axios.post('/_ajax.php', params).then(res => {
       console.log(res);
       console.log(res.data.state);
-      // this.todos = res.data.state
-    })
+      this.todos = res.data.state;
+    });
     this.stateChange();
     console.log(this.todos);
-    console.log('mounted')
-  },
-
-
-})
+    console.log('mounted');
+  }
+});

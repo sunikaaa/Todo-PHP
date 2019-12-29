@@ -1,4 +1,7 @@
 <?php
+
+// echo phpinfo();
+// exit;
 require_once(__DIR__ . '/config/config.php');
 require_once(__DIR__ . '/lib/functions.php');
 require_once(__DIR__ . '/lib/Todo.php');
@@ -11,7 +14,6 @@ $todos = $todoApp->getAll();
 
 ?>
 
-<!DOCTYPE html>
 <html lang="ja">
 
 <head>
@@ -19,51 +21,49 @@ $todos = $todoApp->getAll();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="styles.css">
-  <!-- <script src="vue.js" type="module"></script> -->
-  <!-- <script src="axios" type="module"></script> -->
-  <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+  <script src="/node_modules/vue/dist/vue.js"></script>
+  <script src="/node_modules/axios/dist/axios.js"></script>
   <title>Todos</title>
 </head>
 
 <body>
-<div id="app">
-  {{message}}
-<div id="container">
-  <h1>Todos</h1>
-  <form action="/_ajax.php" method="POST">
-  <input type="text" id="new_todo" 　name="mode" placeholder="やることは？">
-  <input type="number" id="new_todo" 　name="id" value="1">
-  <input type="submit" value="送信">
-  </form>
-  <ul id="todos">
-    <?php
-    foreach ($todos as $todo) : ?>
-    <li>
-      <input type="checkbox" 
-             class="update_todo" 
-             v-on:input="doneTodo(<?= $todo->id ?>,$event)" 
-             <?php if ($todo->state === '1') {                                                                                                   
-             echo "checked";}
-                                                                                                        ?>>
+  <div id="app">
+    {{message}}
+    <div id="container">
+      <h1>Todos</h1>
+      <form action="/_ajax.php" method="POST">
+        <input type="text" id="new_todo" 　name="mode" placeholder="やることは？">
+        <input type="number" id="new_todo" 　name="id" value="1">
+        <input type="submit" value="送信">
+      </form>
+      <ul id="todos">
+        <?php
+        foreach ((array) $todos as $todo) : ?>
+          <li>
+            <input type="checkbox" class="update_todo" v-on:input="doneTodo(<?= $todo->id ?>,$event)" <?php if ($todo->state === '1') {
+                                                                                                        echo "checked";
+                                                                                                      }
+                                                                                                      ?>>
             <span class="<?php if ($todo->state === '1') {
-                          echo 'done';}?>">
-            <?php echo h($todo->title); ?></span>
+                            echo 'done';
+                          } ?>">
+              <?php echo h($todo->title); ?></span>
             <div class="delete_todo">×</div>
-    </li>
+          </li>
         <?php endforeach ?>
-</ul>
+      </ul>
 
-<hr class="vue-php">
-  <ul>
-  aaa
-    <li v-for="todo in todos">
-      <input type="checkbox" class="update_todo" v-model="todo.state">
-      <span :class="{done : todo.state}">{{todo.title}}</span>
-      <div class="delete_todo">×</div>
+      <hr class="vue-php">
+      <ul>
+        <li v-for="todo in todos">
+          <input type="checkbox" class="update_todo" v-model="todo.state">
+          <span :class="{done : todo.state}">{{todo.title}}</span>
+          <div class="delete_todo">×</div>
         </li>
-  </ul>
-</div>
-</div>
-<script src="todos.js"></script>
+      </ul>
+    </div>
+  </div>
+  <script src="todos.js"></script>
 </body>
+
 </html>
