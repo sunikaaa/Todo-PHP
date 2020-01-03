@@ -41,8 +41,7 @@ var app = new Vue({
     const params = new URLSearchParams();
     params.append('id', 0);
     params.append('mode', 'mounted');
-    // console.log(axios)
-    await axios.post('/_ajax.php', params).then(res => {
+    axios.post('/_ajax.php', params).then(res => {
       console.log(res);
       console.log(res.data.state);
       this.todos = res.data.state;

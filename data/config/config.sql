@@ -9,7 +9,7 @@ create table todos (
   title text
 );
 
-insert into todos (state, title) values
-(0, 'todo 0'),
-(0, 'todo 1'),
-(1, 'todo 2');
+-- insert into todos (state, title) values
+-- (0, 'todo 0'),
+-- (0, 'todo 1'),
+-- (1, 'todo 2');
