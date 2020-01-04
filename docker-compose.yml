@@ -21,20 +21,18 @@ services:
     ports:
       - '3306:3306'
     environment:
-       MYSQL_ROOT_PASSWORD: rootpass
-       MYSQL_USER: user
-       MYSQL_PASSWORD: userpass
-       MYSQL_DATABASE: sample
-       TZ: 'Asia/Tokyo'
-  
-  phpmyadmin:
-    container_name: test_phpmyadmin
-    image: phpmyadmin/phpmyadmin
-    environment:
-    - PMA_ARBITRARY=1
-    - PMA_HOSTS=mysql_host
-    - PMA_USER=root
-    - PMA_PASSWORD=rootpass
-    ports:
-    - 8000:80
-
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+      MYSQL_DATABASE: sample
+      TZ: 'Asia/Tokyo'
+  # phpmyadmin:
+  #   container_name: test_phpmyadmin
+  #   image: phpmyadmin/phpmyadmin
+  #   environment:
+  #   - PMA_ARBITRARY=1
+  #   - PMA_HOSTS=mysql_host
+  #   - PMA_USER=root
+  #   - PMA_PASSWORD=rootpass
+  #   ports:
+  #   - 8000:80

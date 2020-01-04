@@ -1,7 +1,7 @@
 <?php
 
 namespace MyApp;
-// aaa
+
 class Todo
 {
     private $_db;
@@ -50,7 +50,7 @@ class Todo
         $this->_db->beginTransaction();
 
         $sql = sprintf("update todos set state = (state + 1) %% 2 where id = %d", $_POST['id']);
-        $stmt = $this->_db->prepate($sql);
+        $stmt = $this->_db->prepare($sql);
         $stmt->execute();
 
         $sql = sprintf("select state from todos where id = %d", $_POST['id']);
@@ -73,9 +73,15 @@ class Todo
         $stmt = $this->_db->query($sql);
         $state = $stmt->fetchAll();
         $this->_db->commit();
-
         return [
             'state' => $state
         ];
     }
+
+    // private function _create()
+    // {
+    //     $this->_db->beginTransaction();
+
+    //     $sql = sprintf("insert into todos (state, title) values (%d,%d)",)
+    // }
 }

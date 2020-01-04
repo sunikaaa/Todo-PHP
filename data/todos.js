@@ -26,13 +26,23 @@ var app = new Vue({
           console.log(error);
         });
     },
-    stateChange() {
+    stateChangeToBool() {
       this.todos.forEach(value => {
         if (value.state == 1) {
           value.state = true;
         }
         if (value.state == 0) {
           value.state = false;
+        }
+      });
+    },
+    stateChangeToNumber() {
+      return this.todos.map(value => {
+        if (value.state === true) {
+          return 1;
+        }
+        if (value.state === false) {
+          return 0;
         }
       });
     }
@@ -45,9 +55,17 @@ var app = new Vue({
       console.log(res);
       console.log(res.data.state);
       this.todos = res.data.state;
+      this.stateChangeToBool();
     });
-    this.stateChange();
     console.log(this.todos);
     console.log('mounted');
+  },
+  watch: {
+    todos: {
+      handler: function() {
+        console.log(e, 'aa');
+      },
+      deep: true
+    }
   }
 });
