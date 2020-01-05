@@ -78,10 +78,31 @@ class Todo
         ];
     }
 
-    // private function _create()
-    // {
-    //     $this->_db->beginTransaction();
+    private function _create()
+    {
+        if (!isset($_POST['id']) || $_POST['title'] === '') {
+            throw new \Exception('[create] title not set!');
+        }
 
-    //     $sql = sprintf("insert into todos (state, title) values (%d,%d)",)
-    // }
+        $sql = "insert into todos (title) values (:title)";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute([':title' => $_POST['title']]);
+
+        return [
+            'id' => $this->_db->lastInsertId()
+        ];
+    }
+
+    private function _delete()
+    {
+        if (!isset($_POST['id'])) {
+            throw new \Exception('[delete] id not set!');
+        }
+
+        $sql = sprintf("delete from todos where id = %d", $_POST['id']);
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+
+        return [];
+    }
 }

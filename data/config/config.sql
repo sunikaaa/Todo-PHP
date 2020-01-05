@@ -1,5 +1,6 @@
 create database my_todo_app;
-grant all on my_todo_app.* to dbuser@localhost 
+create user dbuser;
+grant all on my_todo_app.* to dbuser@'%';
 
 use my_todo_app
 
@@ -9,7 +10,7 @@ create table todos (
   title text
 );
 
--- insert into todos (state, title) values
--- (0, 'todo 0'),
--- (0, 'todo 1'),
--- (1, 'todo 2');
+insert into todos (state, title) values
+(0, 'todo 0'),
+(0, 'todo 1'),
+(1, 'todo 2');
