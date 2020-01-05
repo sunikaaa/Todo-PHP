@@ -1,0 +1,24 @@
+.list-item {
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+
+.list-move {
+  transition: transform 1s;
+}
+
+.list-item {
+  transition: all 1s;
+  margin-right: 10px;
+}
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.list-leave-active {
+  position: absolute;
+}

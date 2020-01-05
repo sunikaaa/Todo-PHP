@@ -9,26 +9,32 @@ var app = new Vue({
   methods: {
     doneTodo: async function(id, e) {
       const res = await this.commonAjax(id, e, 'update');
+    },
+    async deleteTodo(id, e) {
+      const res = await this.commonAjax(id, e, 'delete');
+
+      this.todos.splice(
+        this.todos.findIndex(value => value.id === id),
+        1
+      );
       console.log(res);
     },
-    deleteTodo(id, e) {
-      const res = this.commonAjax(id, e, 'delete');
-      this.todos.splice(id, 1);
-      console.log(res);
-    },
-    addTodo(id, e) {
-      const res = this.commonAjax(id, e, 'create', this.newTodo);
+    async addTodo(id, e) {
+      const res = await this.commonAjax(id, e, 'create', this.newTodo);
       const todo = new Object();
       console.log(res);
+      todo.id = res.data.id;
+      todo.title = this.newTodo;
+      todo.state = false;
+      this.todos.unshift(todo);
     },
-    commonAjax(id, e, sendMode, createTitle = false) {
+    commonAjax(id = 0, e, sendMode, createTitle) {
       const params = new URLSearchParams();
-      console.log(id, e);
+      console.log(id, e, createTitle);
       params.append('id', id);
       params.append('mode', sendMode);
-      if (!createTitle) {
-        params.append('title', createTitle);
-      }
+      params.append('title', createTitle);
+
       return axios.post('_ajax.php', params).catch(err => console.log(err));
     },
     stateChangeToBool() {
